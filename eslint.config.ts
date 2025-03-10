@@ -1,17 +1,16 @@
 import js from '@eslint/js'
-import globals from 'globals'
+import stylisticPlugin from '@stylistic/eslint-plugin'
+import tsParser from '@typescript-eslint/parser'
+import importPlugin from 'eslint-plugin-import'
 import reactHooks from 'eslint-plugin-react-hooks'
 import reactRefresh from 'eslint-plugin-react-refresh'
-import tseslint from 'typescript-eslint'
-import importPlugin from 'eslint-plugin-import'
-import tsParser from '@typescript-eslint/parser'
-import stylisticPlugin from '@stylistic/eslint-plugin'
+import { config as tseslintConfigFn, configs as tseslintConfigs } from 'typescript-eslint'
 
-export default tseslint.config(
+export default tseslintConfigFn(
   { ignores: ['dist'] },
 
   js.configs.recommended,
-  tseslint.configs.recommended,
+  tseslintConfigs.recommended,
 
   importPlugin.flatConfigs.recommended,
   importPlugin.flatConfigs.typescript,
@@ -29,25 +28,25 @@ export default tseslint.config(
     },
     rules: {
       '@stylistic/explicit-module-boundary-types': 'off',
-       '@stylistic/max-len': ['error', {
-         code: 100,
-       }],
-       '@stylistic/no-empty-function': 'off',
-       '@stylistic/no-empty-interface': 'off',
-       '@stylistic/no-trailing-spaces': 'error',
-       '@stylistic/quotes': ['error', 'single'],
-       'no-unused-vars': 'off',
-       'sort-imports': 'off',
-       'import/default': 'off',
-       'import/no-unresolved': 'error',
-       'import/order': [
-         'error',
-         {
-           alphabetize: {
-             order: 'asc',
-           },
-         },
-       ],
+      '@stylistic/max-len': ['error', {
+        code: 100,
+      }],
+      '@stylistic/no-empty-function': 'off',
+      '@stylistic/no-empty-interface': 'off',
+      '@stylistic/no-trailing-spaces': 'error',
+      '@stylistic/quotes': ['error', 'single'],
+      'no-unused-vars': 'off',
+      'sort-imports': 'off',
+      'import/default': 'off',
+      'import/no-unresolved': 'error',
+      'import/order': [
+        'error',
+        {
+          alphabetize: {
+            order: 'asc',
+          },
+        },
+      ],
     },
     settings: {
       'import/resolver': {
