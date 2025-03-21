@@ -28,6 +28,7 @@ export default tseslintConfigFn(
     },
     rules: {
       '@stylistic/explicit-module-boundary-types': 'off',
+      '@stylistic/indent': ['error', 2],
       '@stylistic/max-len': ['error', {
         code: 100,
       }],
