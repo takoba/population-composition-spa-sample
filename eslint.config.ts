@@ -73,8 +73,10 @@ export default tseslintConfigFn(
       'import/resolver': {
         alias: {
           map: [
-            ['', './public']
+            ['', './public'],
+            ['~', './src'],
           ],
+          extensions: ['.ts', '.tsx']
         },
       },
     },
