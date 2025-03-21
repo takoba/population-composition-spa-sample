@@ -1,10 +1,4 @@
-type Prefectures = {
-  message: string | null
-  result: {
-    prefCode: number
-    prefName: string
-  }[]
-}
+import { Prefectures } from '~/types'
 
 type Props = {
   prefectures: Prefectures
