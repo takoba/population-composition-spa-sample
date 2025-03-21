@@ -1,23 +1,27 @@
-import { Prefectures } from '~/types'
+import { Prefecture, PrefecturesAPIResponse } from '~/types'
 
 type Props = {
-  prefectures: Prefectures
+  prefectures: PrefecturesAPIResponse
 }
 const PrefecturesJsonTest = ({prefectures}: Props) => (
   <>
-    <pre style={{whiteSpace: 'pre-wrap'}}>{JSON.stringify(prefectures)}</pre>
+    <div style={{margin: '1em'}}>
+      <pre style={{whiteSpace: 'pre-wrap', border: '1px solid', padding: '1em'}}>
+        {JSON.stringify(prefectures)}
+      </pre>
+    </div>
     <hr />
     <div>
       {prefectures.result.map((pref) => {
         return <>
-          <pre>{JSON.stringify(pref)}</pre>
-          <div>
+          <div style={{border: '1px solid', margin: '1em', padding: '1em'}}>
+            <pre>{JSON.stringify(pref)}</pre>
             <dl>
               {Object.keys(pref).map((key) => (
                 <>
                   <dt>{key}</dt>
                   <dd><pre>
-                    {key in pref && pref[key as keyof Prefectures['result'][number]]}
+                    {key in pref && pref[key as keyof Prefecture]}
                   </pre></dd>
                 </>
               ))}
