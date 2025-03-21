@@ -3,5 +3,10 @@ import { defineConfig } from 'vite'
 
 // https://vite.dev/config/
 export default defineConfig({
+  resolve: {
+    alias: [
+      { find: '~', replacement: 'src' }
+    ],
+  },
   plugins: [react()],
 })
