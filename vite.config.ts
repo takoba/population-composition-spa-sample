@@ -8,5 +8,10 @@ export default defineConfig({
       { find: '~', replacement: 'src' }
     ],
   },
+  css: {
+    modules: {
+      localsConvention: 'dashes',
+    },
+  },
   plugins: [react()],
 })
