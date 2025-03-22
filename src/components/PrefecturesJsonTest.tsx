@@ -1,3 +1,4 @@
+import { Fragment } from 'react'
 import { Prefecture, PrefecturesAPIResponse } from '~/types'
 
 type Props = {
@@ -13,7 +14,7 @@ const PrefecturesJsonTest = ({prefectures}: Props) => (
     <hr />
     <div>
       {prefectures.result.map((pref) => {
-        return <>
+        return <Fragment key={`${pref.prefCode}-${pref.prefName}`}>
           <div style={{border: '1px solid', margin: '1em', padding: '1em'}}>
             <pre>{JSON.stringify(pref)}</pre>
             <dl>
@@ -27,7 +28,7 @@ const PrefecturesJsonTest = ({prefectures}: Props) => (
               ))}
             </dl>
           </div>
-        </>
+        </Fragment>
       })}
     </div>
   </>
