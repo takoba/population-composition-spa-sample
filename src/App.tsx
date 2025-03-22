@@ -1,6 +1,5 @@
 import 'normalize.css'
-import PrefecturesJsonTest from './components/PrefecturesJsonTest'
-import Toggle from './components/Toggle'
+import PrefecturesPicker from './components/PrefecturesPicker'
 import prefecturesJson from './sample/api/v1/prefectures.json'
 
 const App = () => (
@@ -10,9 +9,7 @@ const App = () => (
 
       <hr />
 
-      <Toggle>
-        <PrefecturesJsonTest prefectures={prefecturesJson} />
-      </Toggle>
+      <PrefecturesPicker prefectures={prefecturesJson.result} />
     </div>
   </>
 )
