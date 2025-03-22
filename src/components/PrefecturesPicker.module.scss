@@ -1,28 +1,14 @@
-
-$infinity: 9999px;
-
 .container {
-  display: flex;
-  flex-wrap: wrap;
-
   width: 100%;
   box-sizing: border-box;
   padding: 4px;
+
+}
+.flex {
+  display: flex;
+  flex-wrap: wrap;
 }
 
-.picker-item {
+.checkbox-button {
   margin: 4px;
-
-  padding: 0.25rem 0.5rem;
-
-  border: 1px solid #333;
-  border-radius: $infinity;
-
-  &:has(input[type=checkbox][name=prefectures]:checked) {
-    background-color: #9f9;
-  }
-
-  input[type=checkbox][name=prefectures] {
-    display: none;
-  }
 }
