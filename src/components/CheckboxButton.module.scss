@@ -1,0 +1,25 @@
+$infinity: 9999px;
+
+.button {
+  display: inline-block;
+  box-sizing: border-box;
+
+  height: 100%;
+  width: 100%;
+  padding: 0;
+
+  border: 1px solid #333;
+  border-radius: $infinity;
+
+  &:has(input[type=checkbox]:checked) {
+    background-color: #ccf;
+  }
+
+  .button-inner-wrapper {
+    padding: 0.25rem 0.5rem;
+  }
+
+  input[type=checkbox] {
+    display: none;
+  }
+}
