@@ -1,9 +1,9 @@
 import 'normalize.css'
 import { useAtomValue } from 'jotai'
 import { JSX, Fragment } from 'react'
-import PrefecturesPicker from './components/PrefecturesPicker.tsx'
 import prefecturesJson from './sample/api/v1/prefectures.json'
 import { pickedPrefecturesAtom } from '~/atoms'
+import { PrefecturesPicker } from '~/components/PrefecturesPicker'
 import { Prefecture } from '~/types/'
 
 const PickedDisplay = (): JSX.Element => {

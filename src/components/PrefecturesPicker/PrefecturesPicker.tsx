@@ -1,8 +1,8 @@
 import { useAtom } from 'jotai'
 import React, { JSX } from 'react'
-import CheckboxButton from './CheckboxButton.tsx'
 import styles from './PrefecturesPicker.module.scss'
 import { pickedPrefecturesAtom } from '~/atoms'
+import { CheckboxButton } from '~/components/CheckboxButton'
 import { Prefecture } from '~/types'
 
 type Props = {
