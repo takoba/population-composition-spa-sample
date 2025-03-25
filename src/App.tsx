@@ -24,7 +24,7 @@ const PickedDisplay = (): JSX.Element => {
 
   return (
     <>
-      {picked.forEach((pref) => (
+      {Array.from(picked).map((pref) => (
         <dl key={`${pref.prefCode}-${pref.prefName}`}>
           {Object.keys(pref).map((key) => (
             <Fragment key={`${pref.prefCode}-${pref.prefName}_${key}`}>
@@ -51,8 +51,8 @@ const App = () => {
 
         <PickedPrefecturesContextProvider>
           <PrefecturesPicker prefectures={prefecturesJson.result} />
+          <PickedDisplay />
         </PickedPrefecturesContextProvider>
-        <PickedDisplay />
       </div>
     </>
   )
