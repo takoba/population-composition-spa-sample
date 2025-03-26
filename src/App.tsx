@@ -1,34 +1,14 @@
 import 'normalize.css'
-import { useAtomValue } from 'jotai'
-import { JSX, Fragment } from 'react'
+import { JSX } from 'react'
+import populationCompositionPerYearPref1Json
+  from './sample/api/v1/population/composition/perYear-prefCode-1.json'
+import populationCompositionPerYearPref2Json
+  from './sample/api/v1/population/composition/perYear-prefCode-2.json'
 import prefecturesJson from './sample/api/v1/prefectures.json'
-import { pickedPrefecturesAtom } from '~/atoms'
+import { GraphRender } from '~/components/GraphRender'
 import { PrefecturesPicker } from '~/components/PrefecturesPicker'
-import { Prefecture } from '~/types/'
 
-const PickedDisplay = (): JSX.Element => {
-  const picked = useAtomValue(pickedPrefecturesAtom)
-
-  return (
-    <div style={{backgroundColor:'#eee', minHeight: '100px'}}>
-      {Array.from(picked).map((pref) => (
-        <dl key={`${pref.prefCode}-${pref.prefName}`}>
-          {Object.keys(pref).map((key) => (
-            <Fragment key={`${pref.prefCode}-${pref.prefName}_${key}`}>
-              <dt>{key}</dt>
-              <dd><pre>
-                {key in pref && pref[key as keyof Prefecture]}
-              </pre></dd>
-            </Fragment>
-          ))}
-        </dl>
-      ))}
-    </div>
-  )
-
-}
-
-const App = () => {
+const App = (): JSX.Element => {
   return (
     <>
       <div style={{width: '100%'}}>
@@ -37,7 +17,10 @@ const App = () => {
         <hr />
 
         <PrefecturesPicker prefectures={prefecturesJson.result} />
-        <PickedDisplay />
+        <GraphRender dataList={[
+          [{prefCode: 1, prefName: '北海道'}, populationCompositionPerYearPref1Json.result],
+          [{prefCode: 2, prefName: '青森県'}, populationCompositionPerYearPref2Json.result],
+        ]} />
       </div>
     </>
   )
