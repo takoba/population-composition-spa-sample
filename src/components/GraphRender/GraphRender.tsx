@@ -1,7 +1,6 @@
-import { useCallback, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import PopulationCompositionGraph from '../PopulationCompositionGraph';
 import styles from './GraphRender.module.scss'
-import { useEffectEvent } from '~/hooks';
 import { GraphRenderData } from '~/types';
 import { integratedGraphDataConverter } from '~/utils/converter';
 
@@ -13,19 +12,10 @@ const GraphRender: React.FC<Props> = ({dataList}) => {
   const integratedData = integratedGraphDataConverter(dataList)
   const labels = integratedData.map((datum) => datum.label)
 
-  const [selectedLabel, setSelectedLabel] = useState(labels[0])
-  const [data, setData] = useState(integratedData.find(({label}) => label === selectedLabel)?.data)
-  const onSelectedLabel = useEffectEvent(
-    useCallback(
-      (label: string) =>
-        setData(integratedData.find((datum) => datum.label === label)?.data),
-      [setData, integratedData]
-    )
-  )
-
+  const [selectedLabel, setSelectedLabel] = useState<string|null>(() => labels[0])
   useEffect(() => {
-    onSelectedLabel(selectedLabel)
-  }, [onSelectedLabel, selectedLabel])
+    setSelectedLabel(selectedLabel ?? labels[0])
+  }, [selectedLabel, labels])
 
   return (
     <div className={styles.container}>
@@ -41,8 +31,13 @@ const GraphRender: React.FC<Props> = ({dataList}) => {
         ))}
       </div>
       <div className={styles.graph}>
-        { data
-          && <PopulationCompositionGraph graphData={data} prefectures={prefectures} />
+        { integratedData.length > 0
+          && <PopulationCompositionGraph
+            graphData={
+              integratedData.find((datum) => datum.label === selectedLabel)?.data ?? []
+            }
+            prefectures={prefectures}
+          />
           || <p>表示できるデータがありません</p>
         }
       </div>

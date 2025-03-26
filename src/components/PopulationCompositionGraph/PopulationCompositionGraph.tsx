@@ -32,26 +32,28 @@ const PopulationCompositionGraph: React.FC<Props> =
         <Tooltip />
         <Legend />
 
-        {/* TODO: あとで1つのmap()にまとまるように書き直す */}
         {prefectures.map(({prefCode, prefName}, index) => (
-          <Line
-            key={`${prefCode}-${prefName}-value`}
-            type="monotone"
-            dataKey={prefName.trim()}
-            name={prefName}
-            stroke={colors[index]}
-            yAxisId={1}
-          />
-        ))}
-        {prefectures.map(({prefCode, prefName}, index) => (
-          <Line
-            key={`${prefCode}-${prefName}-rate`}
-            type="monotone"
-            dataKey={`${prefName.trim()}（割合）`}
-            name={`${prefName}（割合）`}
-            stroke={colors[index]}
-            yAxisId={2}
-          />
+          [
+            <Line
+              key={`${prefCode}-${prefName}-value`}
+              type="monotone"
+              dataKey={prefName.trim()}
+              name={prefName}
+              stroke={colors[index]}
+              strokeWidth={2}
+              yAxisId={1}
+            />,
+            graphData.length > 0 && `${prefName}（割合）` in graphData[0]
+              && <Line
+                key={`${prefCode}-${prefName}-rate`}
+                type="monotone"
+                dataKey={`${prefName.trim()}（割合）`}
+                name={`${prefName}（割合）`}
+                stroke={colors[index]}
+                strokeDasharray='4 4'
+                yAxisId={2}
+              />,
+          ]
         ))}
       </LineChart>
     </ResponsiveContainer>

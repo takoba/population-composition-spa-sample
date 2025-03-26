@@ -1,26 +1,53 @@
 import 'normalize.css'
-import { JSX } from 'react'
-import populationCompositionPerYearPref1Json
-  from './sample/api/v1/population/composition/perYear-prefCode-1.json'
-import populationCompositionPerYearPref2Json
-  from './sample/api/v1/population/composition/perYear-prefCode-2.json'
-import prefecturesJson from './sample/api/v1/prefectures.json'
+import { useAtomValue } from 'jotai'
+import { JSX, useEffect, useState } from 'react'
+import styles from './App.module.scss'
+import { getPopulationCompositionsByPrefectures, getPrefectures } from '~/api'
+import { pickedPrefecturesAtom } from '~/atoms'
 import { GraphRender } from '~/components/GraphRender'
 import { PrefecturesPicker } from '~/components/PrefecturesPicker'
+import { GraphRenderData, Prefecture } from '~/types'
 
 const App = (): JSX.Element => {
+  const [prefectures, setPrefectures] = useState<Prefecture[]>([])
+  useEffect(() => {
+    (async () => {
+      const response = await getPrefectures()
+      setPrefectures(response.result)
+    })()
+  }, [])
+
+  const pickedPrefectures = useAtomValue(pickedPrefecturesAtom)
+  const [dataList, setDataList] = useState<GraphRenderData[]>([])
+  useEffect(() => {
+    (async () => {
+      const responses = await getPopulationCompositionsByPrefectures(Array.from(pickedPrefectures))
+      setDataList(
+        responses.map(
+          ([prefCode, response]) => {
+            const prefecture = prefectures.find((pref) => pref.prefCode === prefCode)
+            if (prefecture === undefined) {
+              throw new Error(
+                `Unexpected Error: cannot find prefecture object. prefCode: ${prefCode}`
+              )
+            }
+            return [prefecture, response.result]
+          }
+        )
+      )
+
+    })()
+  }, [pickedPrefectures, prefectures])
+
   return (
     <>
-      <div style={{width: '100%'}}>
-        <h1>都道府県別の総人口推移グラフを表示するSPA</h1>
+      <div className={styles.container}>
+        <div className={styles.header}>
+          <h1>都道府県別の総人口推移グラフを表示するSPA</h1>
+        </div>
 
-        <hr />
-
-        <PrefecturesPicker prefectures={prefecturesJson.result} />
-        <GraphRender dataList={[
-          [{prefCode: 1, prefName: '北海道'}, populationCompositionPerYearPref1Json.result],
-          [{prefCode: 2, prefName: '青森県'}, populationCompositionPerYearPref2Json.result],
-        ]} />
+        <PrefecturesPicker prefectures={prefectures} />
+        <GraphRender dataList={dataList} />
       </div>
     </>
   )
