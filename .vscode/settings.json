@@ -10,6 +10,18 @@
       "strings": "off"
     },
   },
+  "[css][scss]": {
+    "editor.defaultFormatter": "vscode.css-language-features",
+    "editor.formatOnSave": true,
+    "editor.codeActionsOnSave": {
+      "source.fixAll.eslint": "explicit"
+    },
+    "editor.quickSuggestions": {
+      "other": "on",
+      "comments": "off",
+      "strings": "off"
+    },
+  },
   "[json][jsonc]": {
     "editor.defaultFormatter": "vscode.json-language-features",
     "editor.quickSuggestions": {

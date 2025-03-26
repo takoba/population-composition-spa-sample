@@ -1,35 +1,28 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import 'normalize.css'
+import { JSX } from 'react'
+import populationCompositionPerYearPref1Json
+  from './sample/api/v1/population/composition/perYear-prefCode-1.json'
+import populationCompositionPerYearPref2Json
+  from './sample/api/v1/population/composition/perYear-prefCode-2.json'
+import prefecturesJson from './sample/api/v1/prefectures.json'
+import { GraphRender } from '~/components/GraphRender'
+import { PrefecturesPicker } from '~/components/PrefecturesPicker'
 
-function App() {
-  const [count, setCount] = useState(0)
-
+const App = (): JSX.Element => {
   return (
     <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
+      <div style={{width: '100%'}}>
+        <h1>都道府県別の総人口推移グラフを表示するSPA</h1>
+
+        <hr />
+
+        <PrefecturesPicker prefectures={prefecturesJson.result} />
+        <GraphRender dataList={[
+          [{prefCode: 1, prefName: '北海道'}, populationCompositionPerYearPref1Json.result],
+          [{prefCode: 2, prefName: '青森県'}, populationCompositionPerYearPref2Json.result],
+        ]} />
       </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
     </>
   )
 }
-
 export default App
