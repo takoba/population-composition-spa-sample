@@ -1,23 +1,42 @@
 import 'normalize.css'
+import { useAtomValue } from 'jotai'
 import { JSX, useEffect, useState } from 'react'
-import populationCompositionPerYearPref1Json
-  from './sample/api/v1/population/composition/perYear-prefCode-1.json'
-import populationCompositionPerYearPref2Json
-  from './sample/api/v1/population/composition/perYear-prefCode-2.json'
-import { Prefecture } from './types'
-import { getPrefectures } from '~/api'
+import { getPopulationCompositionsByPrefectures, getPrefectures } from '~/api'
+import { pickedPrefecturesAtom } from '~/atoms'
 import { GraphRender } from '~/components/GraphRender'
 import { PrefecturesPicker } from '~/components/PrefecturesPicker'
+import { GraphRenderData, Prefecture } from '~/types'
 
 const App = (): JSX.Element => {
   const [prefectures, setPrefectures] = useState<Prefecture[]>([])
-
   useEffect(() => {
     (async () => {
       const response = await getPrefectures()
       setPrefectures(response.result)
     })()
   }, [])
+
+  const pickedPrefectures = useAtomValue(pickedPrefecturesAtom)
+  const [dataList, setDataList] = useState<GraphRenderData[]>([])
+  useEffect(() => {
+    (async () => {
+      const responses = await getPopulationCompositionsByPrefectures(Array.from(pickedPrefectures))
+      setDataList(
+        responses.map(
+          ([prefCode, response]) => {
+            const prefecture = prefectures.find((pref) => pref.prefCode === prefCode)
+            if (prefecture === undefined) {
+              throw new Error(
+                `Unexpected Error: cannot find prefecture object. prefCode: ${prefCode}`
+              )
+            }
+            return [prefecture, response.result]
+          }
+        )
+      )
+
+    })()
+  }, [pickedPrefectures, prefectures])
 
   return (
     <>
@@ -27,10 +46,7 @@ const App = (): JSX.Element => {
         <hr />
 
         <PrefecturesPicker prefectures={prefectures} />
-        <GraphRender dataList={[
-          [{prefCode: 1, prefName: '北海道'}, populationCompositionPerYearPref1Json.result],
-          [{prefCode: 2, prefName: '青森県'}, populationCompositionPerYearPref2Json.result],
-        ]} />
+        <GraphRender dataList={dataList} />
       </div>
     </>
   )
