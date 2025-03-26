@@ -1,3 +1,4 @@
+import { GraphData, GraphRenderData, IntegratedGraphData } from './graphData'
 import PopulationCompositionPerYear, {
   DataPoint,
   DataPointHasRate,
@@ -9,6 +10,9 @@ import PrefecturesAPIResponse from './prefecturesAPIResponse'
 export type {
   DataPoint,
   DataPointHasRate,
+  GraphData,
+  GraphRenderData,
+  IntegratedGraphData,
   Prefecture,
   PrefecturesAPIResponse,
   PopulationCompositionPerYear,
