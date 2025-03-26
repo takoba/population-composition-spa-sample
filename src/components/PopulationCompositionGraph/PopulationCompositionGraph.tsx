@@ -1,7 +1,11 @@
 
+import randomColor from 'randomcolor'
 import React, { JSX } from 'react'
 import { ResponsiveContainer, LineChart, XAxis, YAxis, Tooltip, Legend, Line } from 'recharts'
 import { GraphData, Prefecture } from '~/types'
+
+
+const colors = randomColor({ count: 47, luminosity: 'dark' })
 
 type Props = {
   graphData: GraphData[]
@@ -29,23 +33,23 @@ const PopulationCompositionGraph: React.FC<Props> =
         <Legend />
 
         {/* TODO: あとで1つのmap()にまとまるように書き直す */}
-        {prefectures.map(({prefCode, prefName}) => (
+        {prefectures.map(({prefCode, prefName}, index) => (
           <Line
             key={`${prefCode}-${prefName}-value`}
             type="monotone"
             dataKey={prefName.trim()}
             name={prefName}
-            stroke="#8884d8"
+            stroke={colors[index]}
             yAxisId={1}
           />
         ))}
-        {prefectures.map(({prefCode, prefName}) => (
+        {prefectures.map(({prefCode, prefName}, index) => (
           <Line
             key={`${prefCode}-${prefName}-rate`}
             type="monotone"
             dataKey={`${prefName.trim()}（割合）`}
             name={`${prefName}（割合）`}
-            stroke="#8884d8"
+            stroke={colors[index]}
             yAxisId={2}
           />
         ))}
