@@ -1,6 +1,7 @@
 import 'normalize.css'
 import { useAtomValue } from 'jotai'
 import { JSX, useEffect, useState } from 'react'
+import styles from './App.module.scss'
 import { getPopulationCompositionsByPrefectures, getPrefectures } from '~/api'
 import { pickedPrefecturesAtom } from '~/atoms'
 import { GraphRender } from '~/components/GraphRender'
@@ -40,10 +41,10 @@ const App = (): JSX.Element => {
 
   return (
     <>
-      <div style={{width: '100%'}}>
-        <h1>都道府県別の総人口推移グラフを表示するSPA</h1>
-
-        <hr />
+      <div className={styles.container}>
+        <div className={styles.header}>
+          <h1>都道府県別の総人口推移グラフを表示するSPA</h1>
+        </div>
 
         <PrefecturesPicker prefectures={prefectures} />
         <GraphRender dataList={dataList} />
