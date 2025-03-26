@@ -1,6 +1,7 @@
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import PopulationCompositionGraph from '../PopulationCompositionGraph';
 import styles from './GraphRender.module.scss'
+import { useEffectEvent } from '~/hooks';
 import { GraphRenderData } from '~/types';
 import { integratedGraphDataConverter } from '~/utils/converter';
 
@@ -14,10 +15,17 @@ const GraphRender: React.FC<Props> = ({dataList}) => {
 
   const [selectedLabel, setSelectedLabel] = useState(labels[0])
   const [data, setData] = useState(integratedData.find(({label}) => label === selectedLabel)?.data)
+  const onSelectedLabel = useEffectEvent(
+    useCallback(
+      (label: string) =>
+        setData(integratedData.find((datum) => datum.label === label)?.data),
+      [setData, integratedData]
+    )
+  )
 
   useEffect(() => {
-    setData(integratedData.find(({label}) => label === selectedLabel)?.data)
-  }, [selectedLabel, integratedData])
+    onSelectedLabel(selectedLabel)
+  }, [onSelectedLabel, selectedLabel])
 
   return (
     <div className={styles.container}>
