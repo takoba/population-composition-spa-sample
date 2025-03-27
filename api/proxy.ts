@@ -6,8 +6,11 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     throw new Error('Unexpected Error: the required env is undefined.')
   }
 
+  const url = new URL(`${API_ORIGIN}${req.url ?? ''}`)
+  url.searchParams.delete('path')
+
   const response = await fetch(
-    `${API_ORIGIN}${new URL(`http://dummy${req.url ?? ''}`).pathname}`,
+    url.href,
     {
       method: req.method,
       headers: {
@@ -17,7 +20,6 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
       body: ['GET', 'HEAD'].includes(req.method ?? '') ? undefined : req.body,
     },
   )
-
   res.status(response.status).json(
     await response.json()
   )
