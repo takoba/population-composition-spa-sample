@@ -1,5 +1,6 @@
 import React, { JSX, PropsWithChildren, useEffect, useRef, useState } from 'react'
 import styles from './CheckboxButton.module.scss'
+import { useEffectEvent } from '~/hooks'
 
 type Props =
   Pick<HTMLInputElement, 'name' | 'value'>
@@ -15,11 +16,14 @@ const CheckboxButton: React.FC<PropsWithChildren<Props>> = ({
     inputRef.current?.checked ?? false
   )
 
-  useEffect(() => {
+  const onChangeChecked = useEffectEvent((checked: HTMLInputElement['checked']) => {
     if (onToggle !== undefined) {
       onToggle(checked)
     }
-  }, [checked])
+  })
+  useEffect(() => {
+    onChangeChecked(checked)
+  }, [checked, onChangeChecked])
 
   const handleToggleChecked = () => {
     setChecked((prev) => !prev)
