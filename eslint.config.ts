@@ -1,9 +1,11 @@
 import js from '@eslint/js'
 import stylisticPlugin from '@stylistic/eslint-plugin'
 import tsParser from '@typescript-eslint/parser'
+import vitestPlugin from '@vitest/eslint-plugin'
 import importPlugin from 'eslint-plugin-import'
 import reactHooks from 'eslint-plugin-react-hooks'
 import reactRefresh from 'eslint-plugin-react-refresh'
+import globals from 'globals'
 import { config as tseslintConfigFn, configs as tseslintConfigs } from 'typescript-eslint'
 
 export default tseslintConfigFn(
@@ -81,5 +83,17 @@ export default tseslintConfigFn(
         },
       },
     },
+  },
+  {
+    files: ['tests/**/*.?(c|m){ts,tsx}', 'vitest.config.ts'],
+
+    ...vitestPlugin.configs.recommended,
+
+    languageOptions: {
+      globals: {
+        ...globals.node,
+      },
+    },
+    rules: {},
   },
 )
