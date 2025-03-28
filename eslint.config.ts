@@ -9,7 +9,7 @@ import globals from 'globals'
 import { config as tseslintConfigFn, configs as tseslintConfigs } from 'typescript-eslint'
 
 export default tseslintConfigFn(
-  { ignores: ['dist'] },
+  { ignores: ['dist', '.vercel'] },
 
   js.configs.recommended,
   tseslintConfigs.recommended,
