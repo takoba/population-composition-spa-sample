@@ -95,5 +95,15 @@ export default tseslintConfigFn(
       },
     },
     rules: {},
+    settings: {
+      'import/resolver': {
+        alias: {
+          map: [
+            ['~', './src'],
+          ],
+          extensions: ['.ts', '.tsx']
+        },
+      },
+    },
   },
 )
